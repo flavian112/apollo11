@@ -1,15 +1,9 @@
 #!/usr/local/bin/python3
 # -*- coding: utf-8 -*-
-#
-# Beispiel von Beni Keller, 2018-05-20
-#
-# Dieses Programm ist ein Minimalbeispiel, wie Himmelskörper und
-# ihre Bewegung mit Pygame simuliert werden können. Physikalisch ist
-# es jedoch komplett unrealistisch.
 
 import pygame as p # Sorry, ich bin zu faul, um immer 'pygame' auszuschreiben.
 
-# Einige Konstanten zur Konfiguration der Simulation.
+# Consts
 SIZE = WIDTH, HEIGHT = 800, 600
 PLANET_STARTPOS = (200, 300)
 MOON_STARTPOS = (600, 300)
