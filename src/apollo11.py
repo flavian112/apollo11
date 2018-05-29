@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pygame as p # Sorry, ich bin zu faul, um immer 'pygame' auszuschreiben.
+from helper_funcs import *
 
 # Consts
 SIZE = WIDTH, HEIGHT = 800, 600
