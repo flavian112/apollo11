@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import pygame
+import numpy as np
 from helper_funcs import *
 
 # Consts
@@ -30,39 +31,39 @@ bgImage = pygame.image.load('imgs/space_background.png')
 screen.blit(bgImage, bgImage.get_rect())
 
 running = True   # Kontrolliert die Repetition des Animations-Loops
+projectionCenter = np.array([2100, 1600])
+projectionWidth = 3800
+projectionHeight = 2800
 
-class PygameObj:
-    # Subclass!
 
-    def __init__(self, screen, x=0.0, y=0.0):
+class pyObj:
+    def __init__(self, screen, drawfunc, pos=np.array([0.0, 0.0])):
         self.screen = screen
-        self.set_pos(x, y)
+        self.pos = pos
+        self.draw = drawfunc
+        self.size = 1.0
+        self.rotation = 0.0
 
     def get_pos(self):
-        return self.x, self.y
+        return self.pos[0], self.pos[1]
 
     def set_pos(self, x, y):
-        self.x = x
-        self.y = y
+        self.pos = np.array([x, y])
 
-    def draw(self):
-        # Overwrite!
-        pass
 
-class AstronomicalObj(PygameObj):
+def drawfuncPlanet(screen, pos, size):
+    print(pos)
+    print(size)
+    pygame.draw.circle(screen, (255,255,255), (int(pos[0]), int(pos[1])), int(size/2))
 
-    def __init__(self, screen, x=0.0, y=0.0, radius=10, img=None):
-        super(AstronomicalObj, self).__init__(screen, x, y)
-        self.img = img
-        self.color = (255,255,255)
-        self.radius = radius
+planetSize = 500
+planet1 = pyObj(screen,drawfuncPlanet, np.array([200, 200]))
+planet2 = pyObj(screen,drawfuncPlanet, np.array([200, 3000]))
+planet3 = pyObj(screen,drawfuncPlanet, np.array([4000, 3000]))
+planet4 = pyObj(screen,drawfuncPlanet, np.array([4000, 300]))
+planet5 = pyObj(screen,drawfuncPlanet, np.array([2100, 1600]))
+objsToDraw =[planet1, planet2, planet3, planet4, planet5]
 
-    def draw(self):
-        if (self.img == None):
-            pygame.draw.circle(self.screen, self.color, self.get_pos(), self.radius)
-        else:
-            pass
-            #pygame.draw.
 #
 # Animations-Loop
 #
@@ -93,7 +94,15 @@ while running:
     ###############################################################################
     
     # screen.fill((0,0,0))
+    w, h = screen.get_size()
+    scaleFactorW = w / projectionWidth
+    scaleFactorH = h / projectionHeight
+    scaleFactor = scaleFactorW if scaleFactorW < scaleFactorH else scaleFactorH
 
+    translation = scale(projectionCenter - np.array([projectionWidth / 2, projectionHeight / 2]), scaleFactor)
+
+    for obj in objsToDraw:
+        obj.draw(screen, flipYaxis(translate(scale(obj.pos, scaleFactor), -translation), h), scaleFactor * planetSize)
 
     # obj.draw()
     pygame.display.update()

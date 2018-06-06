@@ -3,8 +3,28 @@
 
 import numpy as np
 
+def translate(p, v):
+    return p + v
+
+def rotate(p, ang, o=np.array([0.0, 0.0])):
+    s = np.sin(ang)
+    c = np.cos(ang)
+    rotM = np.array([[c,  s],
+                     [-s, c]])
+    return translate(rotM.dot(translate(p, -o)), o)
+
+def scale(p, fac, o=np.array([0.0, 0.0])):
+    return translate(fac * translate(p, -o), o)
+
+def flipYaxis(p, offset):
+    scaleM = np.array([[1.0,  0.0],
+                       [0.0, -1.0]])
+    return  scaleM.dot(translate(p, np.array([0.0, -offset])))
+
+
+
 def numerical_integrate(explicit_diff, x_0, x1_0, dt, steps=1):
-	return runge_kutta(explicit_diff, x_0, x1_0, dt, steps=steps)
+    return runge_kutta(explicit_diff, x_0, x1_0, dt, steps=steps)
 
 def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
     rk = np.zeros((steps + 1,2))
