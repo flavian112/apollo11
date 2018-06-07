@@ -22,18 +22,22 @@ REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 #
 # Game Init
 #
-pygame.init() # Pygame initialisieren.
-pygame.display.set_caption('Apollo 11')
-screen = pygame.display.set_mode(WINDOW_SIZE) # Fenstergrösse festlegen
-clock = pygame.time.Clock() # Brauchen wir zur Framerate-Kontrolle
 
-bgImage = pygame.image.load('imgs/space_background.png')
-screen.blit(bgImage, bgImage.get_rect())
+screen = None
+
+def initPyGame():
+    pygame.init() # Pygame initialisieren.
+    pygame.display.set_caption('Apollo 11')
+    screen = pygame.display.set_mode(WINDOW_SIZE) # Fenstergrösse festlegen
+    clock = pygame.time.Clock() # Brauchen wir zur Framerate-Kontrolle
+
+    bgImage = pygame.image.load('imgs/space_background.png')
+    screen.blit(bgImage, bgImage.get_rect())
+
 
 running = True   # Kontrolliert die Repetition des Animations-Loops
-projectionCenter = np.array([2100, 1600])
-projectionWidth = 3800
-projectionHeight = 2800
+projectionRect = Rect(np.array([3800.0, 2800.0]), pos=np.array([200, 200]))
+
 
 
 class pyObj:
@@ -52,8 +56,6 @@ class pyObj:
 
 
 def drawfuncPlanet(screen, pos, size):
-    print(pos)
-    print(size)
     pygame.draw.circle(screen, (255,255,255), (int(pos[0]), int(pos[1])), int(size/2))
 
 planetSize = 500
@@ -95,11 +97,11 @@ while running:
     
     # screen.fill((0,0,0))
     w, h = screen.get_size()
-    scaleFactorW = w / projectionWidth
-    scaleFactorH = h / projectionHeight
+    scaleFactorW = w / projectionRect.width()
+    scaleFactorH = h / projectionRect.height()
     scaleFactor = scaleFactorW if scaleFactorW < scaleFactorH else scaleFactorH
 
-    translation = scale(projectionCenter - np.array([projectionWidth / 2, projectionHeight / 2]), scaleFactor)
+    translation = scale(projectionRect.pos, scaleFactor)
 
     for obj in objsToDraw:
         obj.draw(screen, flipYaxis(translate(scale(obj.pos, scaleFactor), -translation), h), scaleFactor * planetSize)

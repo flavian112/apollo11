@@ -3,6 +3,29 @@
 
 import numpy as np
 
+class Rect:
+
+    def __init__(self, size, pos=np.array([0.0,0.0]), rotation=0.0):
+        self.size = size
+        self.pos = pos
+        self.rotation = rotation
+
+
+    def width(self):
+        return self.size[0]
+
+    def height(self):
+        return self.size[1]
+
+    def center(self):
+        center_p = self.size/2
+        rotated_p = rotate(center_p, self.rotation)
+        translated_p = translate(rotated_p, self.pos)
+        return translated_p
+
+
+
+
 def translate(p, v):
     return p + v
 
