@@ -23,9 +23,10 @@ REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 # Game Init
 #
 
-screen = None
-
 def initPyGame():
+    global screen
+    global clock
+
     pygame.init() # Pygame initialisieren.
     pygame.display.set_caption('Apollo 11')
     screen = pygame.display.set_mode(WINDOW_SIZE) # Fenstergrösse festlegen
@@ -38,7 +39,7 @@ def initPyGame():
 running = True   # Kontrolliert die Repetition des Animations-Loops
 projectionRect = Rect(np.array([3800.0, 2800.0]), pos=np.array([200, 200]))
 
-
+initPyGame()
 
 class pyObj:
     def __init__(self, screen, drawfunc, pos=np.array([0.0, 0.0])):
@@ -65,6 +66,9 @@ planet3 = pyObj(screen,drawfuncPlanet, np.array([4000, 3000]))
 planet4 = pyObj(screen,drawfuncPlanet, np.array([4000, 300]))
 planet5 = pyObj(screen,drawfuncPlanet, np.array([2100, 1600]))
 objsToDraw =[planet1, planet2, planet3, planet4, planet5]
+
+
+
 
 #
 # Animations-Loop
