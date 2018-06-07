@@ -12,10 +12,14 @@ FRAMERATE = 60
 # Moon
 MOON_MASS = 7.348e22 # kg
 MOON_RADIUS = 1.736e6 # m
+MOON_START_POS = np.array([3.565e8, 0])
+MOON_IMG_PATH = "imgs/moon.png"
 
 # Earth
 EARTH_MASS = 5.972e24 # kg
 EARTH_RADIUS = 6.371e6 # m
+EARTH_START_POS = np.array([0.0, 0.0])
+EARTH_IMG_PATH = "imgs/earth.png"
 
 REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 
@@ -26,6 +30,7 @@ REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 def initPyGame():
     global screen
     global clock
+    global bgImage
 
     pygame.init() # Pygame initialisieren.
     pygame.display.set_caption('Apollo 11')
@@ -33,21 +38,25 @@ def initPyGame():
     clock = pygame.time.Clock() # Brauchen wir zur Framerate-Kontrolle
 
     bgImage = pygame.image.load('imgs/space_background.png')
-    screen.blit(bgImage, bgImage.get_rect())
 
 
 running = True   # Kontrolliert die Repetition des Animations-Loops
-projectionRect = Rect(np.array([3800.0, 2800.0]), pos=np.array([200, 200]))
+
+re = EARTH_RADIUS
+rm = MOON_RADIUS
+ld = MOON_START_POS[0]
+
+projectionRect = Rect(np.array([re+rm+ld, re*2]), pos=np.array([-re, -re]))
 
 initPyGame()
 
 class pyObj:
-    def __init__(self, screen, drawfunc, pos=np.array([0.0, 0.0])):
+    def __init__(self, screen, pos=np.array([0.0, 0.0]), size=1.0, img=None):
         self.screen = screen
         self.pos = pos
-        self.draw = drawfunc
-        self.size = 1.0
+        self.size = size
         self.rotation = 0.0
+        self.img = img
 
     def get_pos(self):
         return self.pos[0], self.pos[1]
@@ -55,19 +64,28 @@ class pyObj:
     def set_pos(self, x, y):
         self.pos = np.array([x, y])
 
-
-def drawfuncPlanet(screen, pos, size):
-    pygame.draw.circle(screen, (255,255,255), (int(pos[0]), int(pos[1])), int(size/2))
-
-planetSize = 500
-planet1 = pyObj(screen,drawfuncPlanet, np.array([200, 200]))
-planet2 = pyObj(screen,drawfuncPlanet, np.array([200, 3000]))
-planet3 = pyObj(screen,drawfuncPlanet, np.array([4000, 3000]))
-planet4 = pyObj(screen,drawfuncPlanet, np.array([4000, 300]))
-planet5 = pyObj(screen,drawfuncPlanet, np.array([2100, 1600]))
-objsToDraw =[planet1, planet2, planet3, planet4, planet5]
+    def draw(self, screen, translation, rotation, scaleFactor):
+        size = scaleFactor * self.size
+        translated_pos = translate(self.pos, -translation)
+        scaled_pos = scale(translated_pos, scaleFactor)
+        pos = flipYaxis(scaled_pos, screen.get_height())
 
 
+        if self.img != None:
+
+            img = pygame.transform.scale(self.img, (int(size), int(size)))
+            screen.blit(img, pos - int(size/2))
+        else:
+            pygame.draw.circle(screen, (255, 255, 255), (int(pos[0]), int(pos[1])), int(size / 2))
+
+earthImg = pygame.image.load(EARTH_IMG_PATH)
+earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg)
+
+moonImg = pygame.image.load(MOON_IMG_PATH)
+moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg)
+
+
+objsToDraw = [earth, moon]
 
 
 #
@@ -98,20 +116,24 @@ while running:
     # Animation 
     #
     ###############################################################################
-    
+    screen.blit(bgImage, bgImage.get_rect())
+
     # screen.fill((0,0,0))
     w, h = screen.get_size()
     scaleFactorW = w / projectionRect.width()
     scaleFactorH = h / projectionRect.height()
     scaleFactor = scaleFactorW if scaleFactorW < scaleFactorH else scaleFactorH
 
-    translation = scale(projectionRect.pos, scaleFactor)
+    #translation = scale(projectionRect.pos, scaleFactor)
+
+    translation = projectionRect.pos
 
     for obj in objsToDraw:
-        obj.draw(screen, flipYaxis(translate(scale(obj.pos, scaleFactor), -translation), h), scaleFactor * planetSize)
+        obj.draw(screen, translation, projectionRect.rotation, scaleFactor)
 
     # obj.draw()
     pygame.display.update()
+    pygame.display.flip()
     clock.tick(FRAMERATE)
 
 pygame.quit()
