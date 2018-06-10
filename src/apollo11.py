@@ -7,8 +7,8 @@ from helper_funcs import *
 
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
-FRAMERATE = 60
-TIME_SCALE = 1000000
+FRAMERATE = 120
+TIME_SCALE = 100000
 
 def angularMomentum(m,r,v):
     return m*np.cross(r, v)
@@ -17,9 +17,8 @@ def angularMomentum(m,r,v):
 MOON_MASS = 7.348e22 # kg
 MOON_RADIUS = 1.736e6 # m
 MOON_PERIGEE_DISTANCE = 3.633e8 # m
-MOON_PERIGEE_VELOCITY = np.array([1.082e3, 0]) # m/s
+MOON_PERIGEE_VELOCITY = np.array([0, 1.082e3]) # m/s
 MOON_START_POS = np.array([MOON_PERIGEE_DISTANCE, 0.00])
-MOON_ANGULAR_MOMENTUM = angularMomentum(MOON_MASS, MOON_START_POS, MOON_PERIGEE_VELOCITY)
 MOON_IMG_PATH = "imgs/moon.png"
 
 # Earth
@@ -30,12 +29,17 @@ EARTH_IMG_PATH = "imgs/earth.png"
 
 REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 
+# Saturn V
+SATURNV_IMG_PATH = 'imgs/rocket.png'
+SATURNV_MASS = 2.97e6 # kg
+
 G = 6.674e-11 # m3 kg-1 s-2
 
 rII_dgl = lambda r: ((-G * EARTH_MASS * MOON_MASS)/np.linalg.norm(r)**2)/REDUCED_MASS*r/np.linalg.norm(r)
 
 #
 # Game Init
+#
 #
 
 def initPyGame():
@@ -69,6 +73,7 @@ class pyObj:
         self.size = size
         self.rotation = 0.0
         self.img = img
+        self.fs = 0.0
 
     def get_pos(self):
         return self.pos[0], self.pos[1]
@@ -95,15 +100,20 @@ class pyObj:
         else:
             pygame.draw.circle(screen, (255, 0, 0), (int(pos[0]), int(pos[1])), int(size/2))
 
+
+
 earthImg = pygame.image.load(EARTH_IMG_PATH)
 earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg)
 
 moonImg = pygame.image.load(MOON_IMG_PATH)
 moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg)
-moon.velocity = np.array([0.001, 1.082e3])
+moon.velocity = MOON_PERIGEE_VELOCITY
+
+saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
+saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS, size=EARTH_RADIUS*10, img=saturnVImg)
 
 
-objsToDraw = [earth, moon]
+objsToDraw = [earth, moon, saturnV]
 
 
 #
@@ -135,15 +145,27 @@ while running:
     ###############################################################################
 
     dt = (1/FRAMERATE)*TIME_SCALE
-
     steps = 10
+
+    # moon
     r = moon.pos - earth.pos
     v = moon.velocity - earth.velocity
     r_new, v_new = numerical_integrate(rII_dgl, r, v, dt / steps, steps)
     moon.pos = r_new
     moon.velocity = v_new
 
-    print(moon.pos)
+    # saturnV
+    r_earth = saturnV.pos - earth.pos
+    r_moon = saturnV.pos - moon.pos
+    fg_earth = G * EARTH_MASS / np.linalg.norm(r_earth)**3 * r_earth
+    fg_moon = G * MOON_MASS / np.linalg.norm(r_moon)**3 * r_moon
+    fg = fg_moon+fg_earth
+    fs = saturnV.fs
+
+    a_saturnV = (fg + fs) / SATURNV_MASS
+     
+
+
 
     ###############################################################################
     #
