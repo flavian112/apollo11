@@ -66,7 +66,7 @@ class pyObj:
 
     def draw(self, screen, translation, rotation, scaleFactor):
         size = scaleFactor * self.size
-        translated_pos = translate(self.pos, -translation)
+        translated_pos = translate(self.pos, translation)
         scaled_pos = scale(translated_pos, scaleFactor)
         pos = flipYaxis(scaled_pos, screen.get_height())
 
@@ -122,11 +122,20 @@ while running:
     w, h = screen.get_size()
     scaleFactorW = w / projectionRect.width()
     scaleFactorH = h / projectionRect.height()
-    scaleFactor = scaleFactorW if scaleFactorW < scaleFactorH else scaleFactorH
+    # scaleFactor = scaleFactorW if scaleFactorW < scaleFactorH else scaleFactorH
 
-    #translation = scale(projectionRect.pos, scaleFactor)
+    translation = -projectionRect.pos
 
-    translation = projectionRect.pos
+    if scaleFactorW < scaleFactorH:
+        scaleFactor = scaleFactorW
+        t = np.array([0.0, h / 2 - (scaleFactorW / scaleFactorH) * h / 2]) / scaleFactor
+        translation += t
+    else:
+        scaleFactor = scaleFactorH
+        t = np.array([w / 2 - (scaleFactorH / scaleFactorW) * w / 2, 0.0]) / scaleFactor
+        translation += t
+
+
 
     for obj in objsToDraw:
         obj.draw(screen, translation, projectionRect.rotation, scaleFactor)
