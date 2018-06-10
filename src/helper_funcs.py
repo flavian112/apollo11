@@ -49,12 +49,13 @@ def flipYaxis(p, offset):
 def numerical_integrate(explicit_diff, x_0, x1_0, dt, steps=1):
     return runge_kutta(explicit_diff, x_0, x1_0, dt, steps=steps)
 
+
 def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
     rk = np.zeros((steps + 1,2))
     rk[0][0] = x_0
     rk[0][1] = x1_0
 
-    for i in range(steps):
+    for i in range(1, steps + 1):
         k1 = np.array([rk[i-1][1], explicit_diff(rk[i-1][0])])
         # Halber Euler-Schritt
         v_tmp = rk[i-1] + k1*dt/2
