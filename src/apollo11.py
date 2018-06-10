@@ -8,11 +8,18 @@ from helper_funcs import *
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 60
+TIME_SCALE = 1000000
+
+def angularMomentum(m,r,v):
+    return m*np.cross(r, v)
 
 # Moon
 MOON_MASS = 7.348e22 # kg
 MOON_RADIUS = 1.736e6 # m
-MOON_START_POS = np.array([3.565e8, 0])
+MOON_PERIGEE_DISTANCE = 3.633e8 # m
+MOON_PERIGEE_VELOCITY = np.array([1.082e3, 0]) # m/s
+MOON_START_POS = np.array([MOON_PERIGEE_DISTANCE, 0.00])
+MOON_ANGULAR_MOMENTUM = angularMomentum(MOON_MASS, MOON_START_POS, MOON_PERIGEE_VELOCITY)
 MOON_IMG_PATH = "imgs/moon.png"
 
 # Earth
@@ -22,6 +29,10 @@ EARTH_START_POS = np.array([0.0, 0.0])
 EARTH_IMG_PATH = "imgs/earth.png"
 
 REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
+
+G = 6.674e-11 # m3 kg-1 s-2
+
+rII_dgl = lambda r: ((-G * EARTH_MASS * MOON_MASS)/np.linalg.norm(r)**2)/REDUCED_MASS*r/np.linalg.norm(r)
 
 #
 # Game Init
@@ -46,7 +57,7 @@ re = EARTH_RADIUS
 rm = MOON_RADIUS
 ld = MOON_START_POS[0]
 
-projectionRect = Rect(np.array([re+rm+ld, re*2]), pos=np.array([-re, -re]))
+projectionRect = Rect(np.array([3*ld+2*rm, re*2]), pos=np.array([-(1.5*ld+rm), -re]))
 
 initPyGame()
 
@@ -54,6 +65,7 @@ class pyObj:
     def __init__(self, screen, pos=np.array([0.0, 0.0]), size=1.0, img=None):
         self.screen = screen
         self.pos = pos
+        self.velocity = np.array([0.0, 0.0])
         self.size = size
         self.rotation = 0.0
         self.img = img
@@ -65,24 +77,30 @@ class pyObj:
         self.pos = np.array([x, y])
 
     def draw(self, screen, translation, rotation, scaleFactor):
+        w, h = screen.get_size()
         size = scaleFactor * self.size
         translated_pos = translate(self.pos, translation)
         scaled_pos = scale(translated_pos, scaleFactor)
-        pos = flipYaxis(scaled_pos, screen.get_height())
+        pos = flipYaxis(scaled_pos, h)
+
+
+        if  not(-w < pos[0] < 2*w or -h < pos[1] < 2*h):
+            return
 
 
         if self.img != None:
-
+            size *= 10
             img = pygame.transform.scale(self.img, (int(size), int(size)))
             screen.blit(img, pos - int(size/2))
         else:
-            pygame.draw.circle(screen, (255, 255, 255), (int(pos[0]), int(pos[1])), int(size / 2))
+            pygame.draw.circle(screen, (255, 0, 0), (int(pos[0]), int(pos[1])), int(size/2))
 
 earthImg = pygame.image.load(EARTH_IMG_PATH)
 earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg)
 
 moonImg = pygame.image.load(MOON_IMG_PATH)
 moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg)
+moon.velocity = np.array([0.001, 1.082e3])
 
 
 objsToDraw = [earth, moon]
@@ -110,10 +128,26 @@ while running:
             # Animation beenden.
             running = False
 
+    ###############################################################################
+    #
+    # Animation
+    #
+    ###############################################################################
+
+    dt = (1/FRAMERATE)*TIME_SCALE
+
+    steps = 10
+    r = moon.pos - earth.pos
+    v = moon.velocity - earth.velocity
+    r_new, v_new = numerical_integrate(rII_dgl, r, v, dt / steps, steps)
+    moon.pos = r_new
+    moon.velocity = v_new
+
+    print(moon.pos)
 
     ###############################################################################
     #
-    # Animation 
+    # Drawing
     #
     ###############################################################################
     screen.blit(bgImage, bgImage.get_rect())

@@ -52,6 +52,7 @@ def numerical_integrate(explicit_diff, x_0, x1_0, dt, steps=1):
 
 def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
     rk = np.zeros((steps + 1,2))
+    rk = np.empty((steps + 1, 2,2))
     rk[0][0] = x_0
     rk[0][1] = x1_0
 
