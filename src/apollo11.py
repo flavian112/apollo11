@@ -35,7 +35,7 @@ SATURNV_MASS = 2.97e6 # kg
 
 G = 6.674e-11 # m3 kg-1 s-2
 
-rII_dgl = lambda r: ((-G * EARTH_MASS * MOON_MASS)/np.linalg.norm(r)**2)/REDUCED_MASS*r/np.linalg.norm(r)
+
 
 #
 # Game Init
@@ -110,7 +110,7 @@ moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg)
 moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
-saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS, size=EARTH_RADIUS*10, img=saturnVImg)
+saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=EARTH_RADIUS/2, img=saturnVImg)
 
 
 objsToDraw = [earth, moon, saturnV]
@@ -148,6 +148,9 @@ while running:
     steps = 10
 
     # moon
+    def rII_dgl(r):
+        return ((-G * EARTH_MASS * MOON_MASS) / np.linalg.norm(r) ** 2) / REDUCED_MASS * r / np.linalg.norm(r)
+
     r = moon.pos - earth.pos
     v = moon.velocity - earth.velocity
     r_new, v_new = numerical_integrate(rII_dgl, r, v, dt / steps, steps)
@@ -155,15 +158,30 @@ while running:
     moon.velocity = v_new
 
     # saturnV
-    r_earth = saturnV.pos - earth.pos
-    r_moon = saturnV.pos - moon.pos
-    fg_earth = G * EARTH_MASS / np.linalg.norm(r_earth)**3 * r_earth
-    fg_moon = G * MOON_MASS / np.linalg.norm(r_moon)**3 * r_moon
-    fg = fg_moon+fg_earth
-    fs = saturnV.fs
+    #r_earth = saturnV.pos - earth.pos
+    #r_moon = saturnV.pos - moon.pos
 
-    a_saturnV = (fg + fs) / SATURNV_MASS
-     
+    e_pos = earth.pos
+    m_pos = moon.pos
+    s_pos = saturnV.pos
+    s_v = saturnV.velocity
+    saturnV_fs = saturnV.fs
+
+    def a_dgl(pos):
+        r_earth = pos - e_pos
+        r_moon = pos - m_pos
+        afg_earth = -((G * EARTH_MASS) / (np.linalg.norm(r_earth)**3)) * r_earth
+        afg_moon = -((G * MOON_MASS) / (np.linalg.norm(r_moon)**3)) * r_moon
+        return afg_moon + afg_earth + (saturnV_fs / SATURNV_MASS)
+
+
+    s_pos_new, s_v_new = numerical_integrate(a_dgl, s_pos, s_v, dt / steps, steps)
+    print(s_pos_new, s_v_new)
+
+
+    saturnV.pos = s_pos_new
+    saturnV.velocity = s_v_new
+
 
 
 
