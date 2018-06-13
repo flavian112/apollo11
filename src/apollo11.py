@@ -8,7 +8,11 @@ from helper_funcs import *
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
-TIME_SCALE = 1000000
+TIME_SCALE = 100000
+
+RESSOURCES_PATH = 'ressources/'
+IMGS_PATH = RESSOURCES_PATH + 'imgs/'
+FONTS_PATH = RESSOURCES_PATH + 'fonts/'
 
 def angularMomentum(m,r,v):
     return m*np.cross(r, v)
@@ -19,22 +23,23 @@ MOON_RADIUS = 1.736e6 # m
 MOON_PERIGEE_DISTANCE = 3.633e8 # m
 MOON_PERIGEE_VELOCITY = np.array([0, 1.082e3]) # m/s
 MOON_START_POS = np.array([MOON_PERIGEE_DISTANCE, 0.00])
-MOON_IMG_PATH = "imgs/moon.png"
+MOON_IMG_PATH = IMGS_PATH + 'moon.png'
 
 # Earth
 EARTH_MASS = 5.972e24 # kg
 EARTH_RADIUS = 6.371e6 # m
 EARTH_START_POS = np.array([0.0, 0.0])
-EARTH_IMG_PATH = "imgs/earth.png"
+EARTH_IMG_PATH = IMGS_PATH + 'earth.png'
 
 REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 
 # Saturn V
-SATURNV_IMG_PATH = 'imgs/rocket.png'
+SATURNV_IMG_PATH = IMGS_PATH + 'rocket.png'
 SATURNV_MASS = 2.97e6 # kg
 
 G = 6.674e-11 # m3 kg-1 s-2
 
+fontPath = FONTS_PATH + 'font.TTF'
 
 
 #
@@ -46,13 +51,15 @@ def initPyGame():
     global screen
     global clock
     global bgImage
+    global txtfont
 
     pygame.init() # Pygame initialisieren.
     pygame.display.set_caption('Apollo 11')
     screen = pygame.display.set_mode(WINDOW_SIZE) # Fenstergrösse festlegen
     clock = pygame.time.Clock() # Brauchen wir zur Framerate-Kontrolle
 
-    bgImage = pygame.image.load('imgs/space_background.png')
+    bgImage = pygame.image.load(IMGS_PATH + 'space_background.png')
+    txtfont = pygame.font.Font(fontPath, 16)
 
 
 running = True   # Kontrolliert die Repetition des Animations-Loops
@@ -66,7 +73,7 @@ projectionRect = Rect(np.array([3*ld+2*rm, re*2]), pos=np.array([-(1.5*ld+rm), -
 initPyGame()
 
 class pyObj:
-    def __init__(self, screen, pos=np.array([0.0, 0.0]), size=1.0, img=None):
+    def __init__(self, screen, pos=np.array([0.0, 0.0]), size=1.0, img=None, name='', color=(255, 255, 255)):
         self.screen = screen
         self.pos = pos
         self.velocity = np.array([0.0, 0.0])
@@ -75,6 +82,8 @@ class pyObj:
         self.img = img
         self.fs = 0.0
         self.angular_v = 0.0
+        self.color = color
+        self.name = name
 
     def get_pos(self):
         return self.pos[0], self.pos[1]
@@ -95,27 +104,37 @@ class pyObj:
 
 
         if self.img != None:
-            size *= 10
+            #size *= 10
             img = pygame.transform.scale(self.img, (int(size), int(size)))
             screen.blit(img, pos - int(size/2))
+            minSize = int((w+h)/2/200)
+            if size < minSize:
+                pygame.draw.circle(screen, self.color, (int(pos[0]), int(pos[1])), minSize)
+
+            nameTag = txtfont.render(self.name, 1, self.color)
+            self.screen.blit(nameTag, pos + np.array([0.0, -size - 10]))
+
+
         else:
-            pygame.draw.circle(screen, (255, 0, 0), (int(pos[0]), int(pos[1])), int(size/2))
+            pygame.draw.circle(screen, self.color, (int(pos[0]), int(pos[1])), int(size/2))
 
 
 
 earthImg = pygame.image.load(EARTH_IMG_PATH)
-earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg)
+earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg, name='Earth', color=(0,0,255))
 
 moonImg = pygame.image.load(MOON_IMG_PATH)
-moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg)
+moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg, name='Moon', color=(0,255,0))
 moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
-saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=EARTH_RADIUS/2, img=saturnVImg)
-saturnV.velocity = np.array([0.0, 1.485e3])
+saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=EARTH_RADIUS/2, img=saturnVImg, name='Saturn V', color=(255,0,0))
+saturnV.velocity = np.array([0.0, 0.0])#1.485e3])
+
+spaceBodies = [earth, moon]
 
 
-objsToDraw = [earth, moon, saturnV]
+objsToDraw = spaceBodies + [saturnV]
 
 
 #
@@ -179,6 +198,19 @@ while running:
 
     saturnV.pos = s_pos_new
     saturnV.velocity = s_v_new
+
+    for spaceBody in spaceBodies:
+        pB = spaceBody.pos
+        rB = spaceBody.size/2
+        pS = saturnV.pos
+        if point_in_circle(pB, rB, pS):
+            BS = pS - pB
+            lBS = np.linalg.norm(BS)
+            d = rB - lBS
+            saturnV.pos += (BS)/lBS*d
+            saturnV.velocity = np.array([0.0, 0.0])
+
+
 
 
 

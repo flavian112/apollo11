@@ -74,5 +74,5 @@ def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
 
     return rk[-1]
 
-def incircle(m,r,p):
-    return (np.linalg.norm(p-m) > r)
+def point_in_circle(m,r,p):
+    return not (np.linalg.norm(p-m) > r)
