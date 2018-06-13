@@ -73,3 +73,6 @@ def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
         rk[i] = rk[i-1] + dt*(k1 + 2*k2 + 2*k3 + k4)/6
 
     return rk[-1]
+
+def incircle(m,r,p):
+    return (np.linalg.norm(p-m) > r)
