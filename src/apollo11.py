@@ -8,7 +8,7 @@ from helper_funcs import *
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
-TIME_SCALE = 100000
+TIME_SCALE = 1000000
 
 def angularMomentum(m,r,v):
     return m*np.cross(r, v)
@@ -74,6 +74,7 @@ class pyObj:
         self.rotation = 0.0
         self.img = img
         self.fs = 0.0
+        self.angular_v = 0.0
 
     def get_pos(self):
         return self.pos[0], self.pos[1]
@@ -111,6 +112,7 @@ moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
 saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=EARTH_RADIUS/2, img=saturnVImg)
+saturnV.velocity = np.array([0.0, 1.485e3])
 
 
 objsToDraw = [earth, moon, saturnV]
@@ -158,9 +160,6 @@ while running:
     moon.velocity = v_new
 
     # saturnV
-    #r_earth = saturnV.pos - earth.pos
-    #r_moon = saturnV.pos - moon.pos
-
     e_pos = earth.pos
     m_pos = moon.pos
     s_pos = saturnV.pos
@@ -176,7 +175,6 @@ while running:
 
 
     s_pos_new, s_v_new = numerical_integrate(a_dgl, s_pos, s_v, dt / steps, steps)
-    print(s_pos_new, s_v_new)
 
 
     saturnV.pos = s_pos_new
