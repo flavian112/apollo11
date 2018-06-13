@@ -8,7 +8,7 @@ from helper_funcs import *
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
-TIME_SCALE = 100000
+TIME_SCALE = 1000#00000
 
 RESSOURCES_PATH = 'ressources/'
 IMGS_PATH = RESSOURCES_PATH + 'imgs/'
@@ -36,6 +36,12 @@ REDUCED_MASS = (MOON_MASS * EARTH_MASS)/(MOON_MASS + EARTH_MASS) # kg
 # Saturn V
 SATURNV_IMG_PATH = IMGS_PATH + 'rocket.png'
 SATURNV_MASS = 2.97e6 # kg
+SATURNV_SIZE = 110
+
+# Eagle
+EAGLE_IMG_PATH = IMGS_PATH + 'eagle.png'
+EAGLE_MASS = 1.64e4
+EAGLE_SIZE = 30
 
 G = 6.674e-11 # m3 kg-1 s-2
 
@@ -128,8 +134,18 @@ moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg, name='Moon
 moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
-saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=EARTH_RADIUS/2, img=saturnVImg, name='Saturn V', color=(255,0,0))
+saturnV = pyObj(screen, EARTH_START_POS + np.array([EARTH_RADIUS, 0.0]), size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0)) #EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2
 saturnV.velocity = np.array([0.0, 0.0])#1.485e3])
+saturnV.fs = np.array([3e7, 0.0])
+
+
+eagleImg = pygame.image.load(EAGLE_IMG_PATH)
+eagle = pyObj(screen, size=EAGLE_SIZE, img=eagleImg, name='Eagle', color=(0,255,255))
+
+def detatchEagle():
+    eagle.pos = saturnV.pos
+    eagle.velocity = saturnV.velocity
+    objsToDraw.extend(eagle)
 
 spaceBodies = [earth, moon]
 
@@ -168,6 +184,19 @@ while running:
     dt = (1/FRAMERATE)*TIME_SCALE
     steps = 10
 
+    # Collision detection
+
+    for spaceBody in spaceBodies:
+        pB = spaceBody.pos
+        rB = spaceBody.size/2
+        pS = saturnV.pos
+        if point_in_circle(pB, rB, pS):
+            BS = pS - pB
+            lBS = np.linalg.norm(BS)
+            d = rB - lBS
+            saturnV.pos += (BS)/lBS*d
+            saturnV.velocity = np.array([0.0, 0.0])
+
     # moon
     def rII_dgl(r):
         return ((-G * EARTH_MASS * MOON_MASS) / np.linalg.norm(r) ** 2) / REDUCED_MASS * r / np.linalg.norm(r)
@@ -184,6 +213,7 @@ while running:
     s_pos = saturnV.pos
     s_v = saturnV.velocity
     saturnV_fs = saturnV.fs
+    print(saturnV.pos)
 
     def a_dgl(pos):
         r_earth = pos - e_pos
@@ -199,16 +229,7 @@ while running:
     saturnV.pos = s_pos_new
     saturnV.velocity = s_v_new
 
-    for spaceBody in spaceBodies:
-        pB = spaceBody.pos
-        rB = spaceBody.size/2
-        pS = saturnV.pos
-        if point_in_circle(pB, rB, pS):
-            BS = pS - pB
-            lBS = np.linalg.norm(BS)
-            d = rB - lBS
-            saturnV.pos += (BS)/lBS*d
-            saturnV.velocity = np.array([0.0, 0.0])
+
 
 
 
