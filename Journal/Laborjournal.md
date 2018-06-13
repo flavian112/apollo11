@@ -5,7 +5,7 @@ Heute haben wir mit dem Projekt begonnen. Unser erster Schritt war es, uns eine 
 **Insert ausgefülltes Blatt hier**
 
 ## Date 2
-Das Eulerverfahren haben wir wie vorgenommen heute fertig programiert. Dabei gab es vor Allem am Anfang Schwierigkeiten, dass zweistufige Verfahren, was bei unserer Simulation von Nöten ist, richtig zu verstehen. 
+Das Eulerverfahren haben wir wie vorgenommen heute fertig programiert. Dabei gab es vor Allem am Anfang Schwierigkeiten, das zweistufige Verfahren, was bei unserer Simulation von Nöten ist, richtig zu verstehen. 
 
 **Insert Eulerprogramm hier**
 
