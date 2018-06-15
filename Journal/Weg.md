@@ -22,9 +22,11 @@ Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordung programiert. Da
     saturnV_fs = saturnV.fs
     print(saturnV.pos)
 ```
+
+Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, angezeigt wird, ist es notwendig das die Objekte "Erde" und "Mond" abhängig von der Grösse des "Projektions Rechtecks", auf dem sich unsere Animation abspielt, zu machen. Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz ziwschen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörper sein.
  
 -Anfangswerte sameln / berechnen [x]
 -zwei Dif.: Zweikörper numerisch, Position für Rakete berechnen  / Gravitations + Schubkraft(Vektor) Einwirkungen [x]
 -bahngeschw. um auf bahn bleiben
--"porjektions Rechteck" Skalierung auf allen Bildschirm
+-"porjektions Rechteck" Skalierung auf allen Bildschirm[x]
 -collison
