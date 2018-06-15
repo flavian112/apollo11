@@ -27,6 +27,6 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
  
 -Anfangswerte sameln / berechnen [x]
 -zwei Dif.: Zweikörper numerisch, Position für Rakete berechnen  / Gravitations + Schubkraft(Vektor) Einwirkungen [x]
--bahngeschw. um auf bahn bleiben
 -"porjektions Rechteck" Skalierung auf allen Bildschirm[x]
--collison
+-collison[x]
+-**bahngeschw. um auf bahn bleiben**
