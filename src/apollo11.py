@@ -8,7 +8,7 @@ from helper_funcs import *
 # Consts
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
-TIME_SCALE = 1000#00000
+TIME_SCALE = 100000#00000
 
 RESSOURCES_PATH = 'ressources/'
 IMGS_PATH = RESSOURCES_PATH + 'imgs/'
@@ -134,9 +134,9 @@ moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg, name='Moon
 moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
-saturnV = pyObj(screen, EARTH_START_POS + np.array([EARTH_RADIUS, 0.0]), size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0)) #EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2
+saturnV = pyObj(screen, EARTH_START_POS + np.array([0.0, EARTH_RADIUS]), size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0)) #EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2
 saturnV.velocity = np.array([0.0, 0.0])#1.485e3])
-saturnV.fs = np.array([3e7, 0.0])
+saturnV.fs = np.array([0.0, 3e7])
 
 
 eagleImg = pygame.image.load(EAGLE_IMG_PATH)
@@ -213,7 +213,7 @@ while running:
     s_pos = saturnV.pos
     s_v = saturnV.velocity
     saturnV_fs = saturnV.fs
-    print(saturnV.pos)
+    print("Pos: " + str(saturnV.pos) + "  Velocity: "+str (saturnV.velocity))
 
     def a_dgl(pos):
         r_earth = pos - e_pos
@@ -230,10 +230,25 @@ while running:
     saturnV.velocity = s_v_new
 
 
+    velocity_goal = 1000
 
 
+    vel_dif = abs(np.linalg.norm(saturnV.velocity) - 1000)
 
-
+    if vel_dif > 1000:
+        if np.linalg.norm(saturnV.velocity) > 1000:
+            saturnV.fs += np.array([0.0, -1e6])
+            pass
+        else:
+            saturnV.fs += np.array([0.0, 1e6])
+            pass
+    else:
+        if np.linalg.norm(saturnV.velocity) > 1000:
+            saturnV.fs += np.array([0.0, -1e3])
+            pass
+        else:
+            saturnV.fs += np.array([0.0, 1e3])
+            pass
 
 
     ###############################################################################
