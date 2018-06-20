@@ -10,11 +10,12 @@ WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
 TIME_SCALE = 100000
 
+# Ressource - Pfade
 RESSOURCES_PATH = 'ressources/'
 IMGS_PATH = RESSOURCES_PATH + 'imgs/'
 FONTS_PATH = RESSOURCES_PATH + 'fonts/'
 
-# Moon
+# Mond
 MOON_MASS = 7.348e22 # kg
 MOON_RADIUS = 1.736e6 # m
 MOON_PERIGEE_DISTANCE = 3.633e8 # m
@@ -22,7 +23,7 @@ MOON_PERIGEE_VELOCITY = np.array([0, 1.082e3]) # m/s
 MOON_START_POS = np.array([MOON_PERIGEE_DISTANCE, 0.00])
 MOON_IMG_PATH = IMGS_PATH + 'moon.png'
 
-# Earth
+# Erde
 EARTH_MASS = 5.972e24 # kg
 EARTH_RADIUS = 6.371e6 # m
 EARTH_START_POS = np.array([0.0, 0.0])
@@ -71,20 +72,21 @@ re = EARTH_RADIUS
 rm = MOON_RADIUS
 ld = MOON_START_POS[0]
 
+# Kamerarechteck welches auf den Bildschirm Projeziert wird
 projectionRect = Rect(np.array([3*ld+2*rm, re*2]), pos=np.array([-(1.5*ld+rm), -re]))
 
 initPyGame()
 
+# PyGame Klasse, welche Position, usw. für ein Objekt speichert und gewisse Hilfsmethoden bietet
 class pyObj:
     def __init__(self, screen, pos=np.array([0.0, 0.0]), size=1.0, img=None, name='', color=(255, 255, 255)):
         self.screen = screen
-        self.pos = pos
+        self.pos = pos # Ortsvektor in [m]
         self.velocity = np.array([0.0, 0.0])
-        self.size = size
-        self.rotation = 0.0
+        self.size = size # Grösse bzw Durchmesser in [m]
+        self.rotation = 0.0 # Rotation in [rad]
         self.img = img
-        self.fs = 0.0
-        self.angular_v = 0.0
+        self.fs = 0.0 # Schubkraft in [N]
         self.color = color
         self.name = name
 
@@ -95,25 +97,29 @@ class pyObj:
         self.pos = np.array([x, y])
 
     def draw(self, screen, translation, rotation, scaleFactor):
+        # Transformation des Projektionsrechtecks auf die Fenstergrösse
         w, h = screen.get_size()
         size = scaleFactor * self.size
         translated_pos = translate(self.pos, translation)
         scaled_pos = scale(translated_pos, scaleFactor)
         pos = flipYaxis(scaled_pos, h)
 
-
+        # Objekt wird nur gezeichnet, falls objekt im Projektionsrechteck ist
         if  not(-w < pos[0] < 2*w or -h < pos[1] < 2*h):
             return
 
 
         if self.img != None:
-            #size *= 10
+            # Bild des Objekts wird gezeichnet falls vorhanden.
             img = pygame.transform.scale(self.img, (int(size), int(size)))
             screen.blit(img, pos - int(size/2))
+
+            # Falls das Bild zu klein ist wird ein Kreis Gezeichnet
             minSize = int((w+h)/2/200)
             if size < minSize:
                 pygame.draw.circle(screen, self.color, (int(pos[0]), int(pos[1])), minSize)
 
+            # Label
             nameTag = txtfont.render(self.name, 1, self.color)
             self.screen.blit(nameTag, pos + np.array([0.0, -size - 10]))
 
@@ -123,6 +129,8 @@ class pyObj:
 
 
 
+
+# Initialisierung der PyGame Objekten
 earthImg = pygame.image.load(EARTH_IMG_PATH)
 earth = pyObj(screen, EARTH_START_POS, size=EARTH_RADIUS*2, img=earthImg, name='Earth', color=(0,0,255))
 
@@ -139,20 +147,23 @@ saturnV.fs = np.array([0.0, 3e7])
 eagleImg = pygame.image.load(EAGLE_IMG_PATH)
 eagle = pyObj(screen, size=EAGLE_SIZE, img=eagleImg, name='Eagle', color=(0,255,255))
 
+
+
 def detatchEagle():
     eagle.pos = saturnV.pos
     eagle.velocity = saturnV.velocity
     objsToDraw.extend(eagle)
 
-spaceBodies = [earth, moon]
 
 
-objsToDraw = spaceBodies + [saturnV]
+spaceBodies = [earth, moon] # Objekte welche andere durch Gravitation beeinflussen
+objsToDraw = spaceBodies + [saturnV] # Objekte welche Gezeichnet werden sollen
 
 
 #
-# Animations-Loop
+# Runloop
 #
+
 while running:
 
     
@@ -174,10 +185,12 @@ while running:
 
     ###############################################################################
     #
-    # Animation
+    # Animation und Berechnungen der neuen Positionen
     #
     ###############################################################################
 
+
+    # Berechnung von dt
     dt = (1/FRAMERATE)*TIME_SCALE
     steps = 10
 
@@ -194,7 +207,9 @@ while running:
             saturnV.pos += (BS)/lBS*d
             saturnV.velocity = np.array([0.0, 0.0])
 
-    # moon
+    # Mond
+
+    # DGL für Zweikörperproblem von Erde und Mond
     def rII_dgl(r):
         return ((-G * EARTH_MASS * MOON_MASS) / np.linalg.norm(r) ** 2) / REDUCED_MASS * r / np.linalg.norm(r)
 
@@ -204,14 +219,16 @@ while running:
     moon.pos = r_new
     moon.velocity = v_new
 
-    # saturnV
+    # Saturn V
     e_pos = earth.pos
     m_pos = moon.pos
     s_pos = saturnV.pos
     s_v = saturnV.velocity
     saturnV_fs = saturnV.fs
-    print("Pos: " + str(saturnV.pos) + "  Velocity: "+str (saturnV.velocity))
 
+    # print("Pos: " + str(saturnV.pos) + "  Velocity: "+str (saturnV.velocity))
+
+    # DGL für Position von Rackete Berechnene
     def a_dgl(pos):
         r_earth = pos - e_pos
         r_moon = pos - m_pos
@@ -276,8 +293,7 @@ while running:
 
     for obj in objsToDraw:
         obj.draw(screen, translation, projectionRect.rotation, scaleFactor)
-
-    # obj.draw()
+        
     pygame.display.update()
     pygame.display.flip()
     clock.tick(FRAMERATE)
