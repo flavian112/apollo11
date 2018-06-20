@@ -3,13 +3,13 @@
 
 import numpy as np
 
-class Rect:
 
+# Klasse für ein Rechteck mit verschiedenen Hilfsmethoden
+class Rect:
     def __init__(self, size, pos=np.array([0.0,0.0]), rotation=0.0):
         self.size = size
         self.pos = pos
         self.rotation = rotation
-
 
     def width(self):
         return self.size[0]
@@ -25,10 +25,11 @@ class Rect:
 
 
 
-
+# Methode für die Translation eines Ortvektors
 def translate(p, v):
     return p + v
 
+# Methode um Ortsvektoren relativ zu einem gegebenen Punkt zu rotieren
 def rotate(p, ang, o=np.array([0.0, 0.0])):
     s = np.sin(ang)
     c = np.cos(ang)
@@ -36,9 +37,12 @@ def rotate(p, ang, o=np.array([0.0, 0.0])):
                      [-s, c]])
     return translate(rotM.dot(translate(p, -o)), o)
 
+# Methode um Ortsvektoren relativ zu einem gegebenen Punkt zu skalieren
 def scale(p, fac, o=np.array([0.0, 0.0])):
     return translate(fac * translate(p, -o), o)
 
+
+# Methode um Ortsvektoren an der X-Achse zu spieglen
 def flipYaxis(p, offset):
     scaleM = np.array([[1.0,  0.0],
                        [0.0, -1.0]])
@@ -46,16 +50,16 @@ def flipYaxis(p, offset):
 
 
 
-def numerical_integrate(explicit_diff, x_0, x1_0, dt, steps=1):
-    return runge_kutta(explicit_diff, x_0, x1_0, dt, steps=steps)
+def numerical_integrate(explicit_diff, x_0, xI_0, dt, steps=1):
+    return runge_kutta(explicit_diff, x_0, xI_0, dt, steps=steps)
 
 
-def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
-    rk = np.zeros((steps + 1,2))
+def runge_kutta(explicit_diff, x_0, xI_0, dt, steps):
+    # Initialisierung
     rk = np.empty((steps + 1, 2,2))
     rk[0][0] = x_0
-    rk[0][1] = x1_0
-
+    rk[0][1] = xI_0
+    # Hiermit kann man die anzahl Runge-Kutta Iterationen steuern
     for i in range(1, steps + 1):
         k1 = np.array([rk[i-1][1], explicit_diff(rk[i-1][0])])
         # Halber Euler-Schritt
@@ -66,7 +70,7 @@ def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
         v_tmp = rk[i-1] + k2*dt/2
         k3 = np.array([v_tmp[1], explicit_diff(v_tmp[0])])
 
-        # ganzer Euler-Schritt mit k3
+        # Ganzer Euler-Schritt mit k3
         v_tmp = rk[i-1] + k3*dt
         k4 = np.array([v_tmp[1], explicit_diff(v_tmp[0])])
 
@@ -74,5 +78,7 @@ def runge_kutta(explicit_diff, x_0, x1_0, dt, steps):
 
     return rk[-1]
 
+
+# Methode zum Herausfinden, ob ein Punkt innerhalb eines Kreises liegt
 def point_in_circle(m,r,p):
     return not (np.linalg.norm(p-m) > r)

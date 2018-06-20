@@ -5,17 +5,14 @@ import pygame
 import numpy as np
 from helper_funcs import *
 
-# Consts
+# Konstanten
 WINDOW_SIZE = WIDTH, HEIGHT = 800, 600
 FRAMERATE = 120
-TIME_SCALE = 100000#00000
+TIME_SCALE = 100000
 
 RESSOURCES_PATH = 'ressources/'
 IMGS_PATH = RESSOURCES_PATH + 'imgs/'
 FONTS_PATH = RESSOURCES_PATH + 'fonts/'
-
-def angularMomentum(m,r,v):
-    return m*np.cross(r, v)
 
 # Moon
 MOON_MASS = 7.348e22 # kg
