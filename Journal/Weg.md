@@ -6,7 +6,7 @@ Der Grund wieso wir dieses eher anspruchsvolles Projekt gewählt haben, ist zum 
 
 ## Unser Weg
 
-Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgeliestet, welche "Teilaufgaben" es zu bewältigen gilt, um die Simulation korrekt darzustellen. </br>
+Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgeliestet, welche Teilaufgaben es zu bewältigen gilt, um die Simulation korrekt darzustellen. </br>
 Es braucht:
 * Anfangswerte und Konstanten
 * Ein Runge-Kutta-Verfahren für das Lösen der Differenzialgleichung, damit man die Position und die folgende Position des Mondes und der  Rakete annäherungsweise berechnen kann
@@ -25,7 +25,7 @@ Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordnung programmiert. 
 Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf die Rakete auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand von einem Vektor berechnet beziehungsweise sie fliegt in die Richtung des Vektors.
 
 ### Skalierung 
-Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, angezeigt wird, ist es notwendig das die Objekte *Erde* und *Mond* abhängig von der Grösse des *Projektions-Rechtecks*, auf dem sich unsere Animation abspielt, zu machen. 
+Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, angezeigt wird, ist es notwendig das die Objekte Erde und Mond abhängig von der Grösse des Projektions-Rechtecks, auf dem sich unsere Animation abspielt, zu machen. 
 
 ### Kollisionserkennung
 Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
