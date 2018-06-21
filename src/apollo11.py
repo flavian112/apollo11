@@ -152,10 +152,11 @@ eagle = pyObj(screen, size=EAGLE_SIZE, img=eagleImg, name='Eagle', color=(0,255,
 def detatchEagle():
     eagle.pos = saturnV.pos
     eagle.velocity = saturnV.velocity
-    objsToDraw.extend(eagle)
+    objsToDraw.append(eagle)
 
 
 
+rocket = [eagle, saturnV]
 spaceBodies = [earth, moon] # Objekte welche andere durch Gravitation beeinflussen
 objsToDraw = spaceBodies + [saturnV] # Objekte welche Gezeichnet werden sollen
 
@@ -163,7 +164,6 @@ objsToDraw = spaceBodies + [saturnV] # Objekte welche Gezeichnet werden sollen
 #
 # Runloop
 #
-
 while running:
 
     
@@ -197,15 +197,16 @@ while running:
     # Collision detection
 
     for spaceBody in spaceBodies:
-        pB = spaceBody.pos
-        rB = spaceBody.size/2
-        pS = saturnV.pos
-        if point_in_circle(pB, rB, pS):
-            BS = pS - pB
-            lBS = np.linalg.norm(BS)
-            d = rB - lBS
-            saturnV.pos += (BS)/lBS*d
-            saturnV.velocity = np.array([0.0, 0.0])
+        for rocket_element in rocket:
+            pB = spaceBody.pos
+            rB = spaceBody.size/2
+            pS = rocket_element.pos
+            if point_in_circle(pB, rB, pS):
+                BS = pS - pB
+                lBS = np.linalg.norm(BS)
+                d = rB - lBS
+                rocket_element.pos += (BS)/lBS*d
+                rocket_element.velocity = np.array([0.0, 0.0])
 
     # Mond
 
@@ -229,7 +230,7 @@ while running:
     # print("Pos: " + str(saturnV.pos) + "  Velocity: "+str (saturnV.velocity))
 
     # DGL für Position von Rackete Berechnene
-    def a_dgl(pos):
+    def a_s_dgl(pos):
         r_earth = pos - e_pos
         r_moon = pos - m_pos
         afg_earth = -((G * EARTH_MASS) / (np.linalg.norm(r_earth)**3)) * r_earth
@@ -237,32 +238,33 @@ while running:
         return afg_moon + afg_earth + (saturnV_fs / SATURNV_MASS)
 
 
-    s_pos_new, s_v_new = numerical_integrate(a_dgl, s_pos, s_v, dt / steps, steps)
+    s_pos_new, s_v_new = numerical_integrate(a_s_dgl, s_pos, s_v, dt / steps, steps)
 
 
     saturnV.pos = s_pos_new
     saturnV.velocity = s_v_new
 
 
-    velocity_goal = 1000
+    # Eagle
+
+    egl_pos = eagle.pos
+    egl_v = eagle.velocity
+    egl_fs = eagle.fs
+
+    # DGL für Position von Eagle berechnen
+    def a_egl_dgl(pos):
+        r_earth = pos - e_pos
+        r_moon = pos - m_pos
+        afg_earth = -((G * EARTH_MASS) / (np.linalg.norm(r_earth)**3)) * r_earth
+        afg_moon = -((G * MOON_MASS) / (np.linalg.norm(r_moon)**3)) * r_moon
+        return afg_moon + afg_earth + (egl_fs / EAGLE_MASS)
 
 
-    vel_dif = abs(np.linalg.norm(saturnV.velocity) - 1000)
+    egl_pos_new, egl_v_new = numerical_integrate(a_egl_dgl, egl_pos, egl_v, dt / steps, steps)
 
-    if vel_dif > 1000:
-        if np.linalg.norm(saturnV.velocity) > 1000:
-            saturnV.fs += np.array([0.0, -1e6])
-            pass
-        else:
-            saturnV.fs += np.array([0.0, 1e6])
-            pass
-    else:
-        if np.linalg.norm(saturnV.velocity) > 1000:
-            saturnV.fs += np.array([0.0, -1e3])
-            pass
-        else:
-            saturnV.fs += np.array([0.0, 1e3])
-            pass
+    eagle.pos = egl_pos_new
+    eagle.velocity = egl_v_new
+
 
 
     ###############################################################################

@@ -1,6 +1,5 @@
-<<<<<<< HEAD
 # Apollo11
-  
+
 ## 1 Zielsetzung & Motivation
 
 Unser Ziel ist es mit Tkinter und Pygame ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt werden und in dessen Umlaufbahn "parken". Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
@@ -35,7 +34,6 @@ Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann 
 
 ## 3 Jetziger Stand
 ## 4 Ausblick
-=======
 [TOC]
 
 ## Zielsetzung & Motivation
@@ -76,4 +74,3 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 -"porjektions Rechteck" Skalierung auf allen Bildschirm[x]
 -collison[x]
 -**bahngeschw. um auf bahn bleiben**
->>>>>>> Komentar 2
