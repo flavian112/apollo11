@@ -16,6 +16,7 @@ Es braucht:
 * Kollisionserkennung
 * Eine passende Geschwindigkeit der Rakete, damit diese aus der Umlaufbahn um die Erde entweichen kann und dann anschliessend auf der Umlaufbahn um den Mond «geparkt» werden kann.
 * Eine passende Schubkraft, damit die Landefähre sanft auf der Oberfläche des Mondes landen kann
+* Ein in Tkinter eingebettetes Pygamefenster
 
 ### 2.1 Anfangswerte und Konstanten
 Eine weitere Aufgabe war es die Anfangswerte und Konstanten in unserer Simulation zu recherchieren und zu berechnen wie zum Beispiel die Erd- oder die Mondmasse. Diese Werte sind von Nöten um die Differenzialgleichungen für das Zweikörperproblem aufzustellen und zu lösen.
