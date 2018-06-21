@@ -34,4 +34,14 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
 
 ## 3 Jetziger Stand
+* Runge-Kutta-Verfahren zweiter Ordnung
+* wir haben ein Funktionierendes Erde-Mond-System
+* Rakete von Gravitation beeinflusst
+* Rakete fliegt
+* Landemodul von Gravitation beeinflusst
 ## 4 Ausblick
+* Schubkraft für Rakete berechnen damit genau auf Mond bzw. um zu *parken*
+* Schubkraft für Eagle damit keine Bruchlandung
+* Schönnere Darstellung
+  * mit Tkinter für Buttons
+  * zoomen
