@@ -25,7 +25,7 @@ Eine weitere Aufgabe war es die Anfangswerte und Konstanten in unserer Simulatio
 Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordnung programmiert. Dabei gab es vor Allem am Anfang Schwierigkeiten, das zweistufige Verfahren, was bei unserer Simulation für die Fortbewegung von Mond und Rakete in Relation zu der Erde von Nöten ist, richtig zu verstehen. 
 
 ### 2.3 Das Zweikörperproblem
-Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf die Rakete auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand eines Vektors berechnet beziehungsweise sie fliegt in die Richtung des Vektors.
+Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf die Rakete auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand eines Vektors berechnet beziehungsweise sie fliegt in die Richtung des vorgegebenen Vektors.
 
 ### 2.4 Skalierung 
 Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, angezeigt wird, ist es notwendig das die Objekte Erde und Mond abhängig von der Grösse des Projektions-Rechtecks, auf dem sich unsere Animation abspielt, zu machen. 
