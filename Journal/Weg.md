@@ -1,4 +1,4 @@
-# Apollo11
+# Apollo11: Mondflug, Landung einer Sonde auf dem Mond
 
 ## 1 Zielsetzung & Motivation
 
