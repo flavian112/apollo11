@@ -110,6 +110,7 @@ class pyObj:
 
 
         if self.img != None:
+            size *= 10
             # Bild des Objekts wird gezeichnet falls vorhanden.
             img = pygame.transform.scale(self.img, (int(size), int(size)))
             screen.blit(img, pos - int(size/2))
