@@ -40,19 +40,12 @@ Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann 
 ## 3 Jetziger Stand
 ![Screenshot](/Users/flavian112/Developer/Repository/apollo11/Journal/Screenshot1.png)
 
+Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie. Für die Berechnung der Positionen des Mondes hat es ein funktionierendes Runge-Kutta-Verfahren zweiter Ordnung. Die Rakete wird wie der Mond von der Gravitationskraft der Erde aber auch noch von der Gravitationskraft des Mondes beeinflusst. Für die Berechnung der Position kann die selbe Runge-Kutta-Funktion verwendet werden. Die Rakete ist auch flugfähig dank eines Vektors, der die Schubkraft darstellen soll. Das Landemodul kann von der Rakete losgelöst werden und wird genau wie die Rakete von den beiden Gravitationskräften beeinflusst. 
 
-
-Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie.
-
-* Pygamesimulation
-* Runge-Kutta-Verfahren zweiter Ordnung
-* wir haben ein Funktionierendes Erde-Mond-System
-* Rakete von Gravitation beeinflusst
-* Rakete fliegt
-* Landemodul von Gravitation beeinflusst
 ## 4 Ausblick
-* Schubkraft für Rakete berechnen damit genau auf Mond bzw. um zu *parken*
-* Schubkraft für Eagle damit keine Bruchlandung
-* Schönnere Darstellung
-  * mit Tkinter für Buttons
-  * zoomen
+Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft der Rakete, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten:
+Die Schubkraft des Landemoduls für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein.
+Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit Tkinter einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
+
+
+
