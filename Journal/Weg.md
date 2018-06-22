@@ -45,7 +45,7 @@ Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der
 ## 4 Ausblick
 Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft der Rakete, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten: </br>
 **Formel** </br>
-Die Schubkraft des Landemoduls für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein.
+Die Schubkraft des Landemoduls für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein. </br>
 Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit *Tkinter* einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
 
 
