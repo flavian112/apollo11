@@ -31,7 +31,7 @@ r'' = -G\frac{mM}{r^2} \cdot \frac{1}{\mu} \cdot \frac{\vec{r}}{r}
 $$
 
 $$
-r'' = \frac{\vec{F_{G-Mond} + \vec{F_{G-Erde} + \vec{F_{s}}}{m}
+r'' = \frac{\vec{F_{G-Mond}} + \vec{F_{G-Erde}} + \vec{F_{s}}}{m}
 $$
 
 
