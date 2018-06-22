@@ -30,6 +30,10 @@ $$
 r'' = -G\frac{mM}{r^2} \cdot \frac{1}{\mu} \cdot \frac{\vec{r}}{r}
 $$
 
+$$
+r'' = \frac{\vec{F_{G-Mond} + \vec{F_{G-Erde} + \vec{F_{s}}}{m}
+$$
+
 
 ### 2.4 Skalierung 
 Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, dargestellt wird, ist es notwendig, dass die Objekte Erde und Mond abhängig von der Grösse des Projektions-Rechtecks, auf dem sich unsere Animation abspielt, zu machen. 
