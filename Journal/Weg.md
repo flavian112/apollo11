@@ -1,15 +1,35 @@
+
+
+
+
+
+
+
+
+
+
+
 # Apollo11
 
+## Mondflug, Landung einer Sonde auf dem Mond
+
+### Braschler Fabian, Kaufmann Flavian
+
+### 22. Juni 2018
+<div style="page-break-after: always;"></div>
 ## 1 Zielsetzung & Motivation
 
 Unser Ziel ist es mit *Tkinter* und *PyGame* ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt und in dessen Umlaufbahn parkiert werden. Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
+
 Der Grund wieso wir dieses eher anspruchsvolle Projekt gewählt haben, ist zum Einem, weil wir von Herr Kambor dazu motiviert wurden, zum Anderen, weil uns die Mondlandung fasziniert. Ausserdem haben wir uns gefragt, welche physikalischen Gesetze man bei einer vereinfachten Raumfahrtsimulation zum Mond beachten muss.
 
 
 ## 2 Unser Weg
 
-Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgelistet, welche Teilaufgaben es zu bewältigen gilt, um die Simulation sinngemäss darzustellen. </br>
+Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgelistet, welche Teilaufgaben es zu bewältigen gilt, um die Simulation sinngemäss darzustellen.
+
 Es braucht:
+
 * Anfangswerte und Konstanten
 * Ein *Runge-Kutta-Verfahren* für das Lösen der Differenzialgleichung, damit man die Position und die folgende Position des Mondes und der Rakete annäherungsweise berechnen kann
 * Differenzialgleichung für das Zweikörperproblem
@@ -40,6 +60,8 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 
 ### 2.5 Kollisionserkennung
 Ein weiterer Aspekt war es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
+
+<div style="page-break-after: always;"></div>
 
 ## 3 Aktueller Stand
 ![Screenshot](./Screenshot1.png)
