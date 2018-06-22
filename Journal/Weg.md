@@ -2,13 +2,13 @@
 
 ## 1 Zielsetzung & Motivation
 
-Unser Ziel ist es mit Tkinter und Pygame ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt werden und in dessen Umlaufbahn "parken". Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
-Der Grund wieso wir dieses eher anspruchsvolle Projekt gewählt haben, ist zum Einem weil wir von Herr Kambor dazu motiviert wurden zum Anderen weil uns die Mondlandung fasziniert und weil wir uns gefragt haben, welche physikalischen Gesetze man bei einer vereinfachten Raumfahrtsimulation zum Mond beachten muss.
+Unser Ziel ist es mit *Tkinter* und *Pygame* ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt werden und in dessen Umlaufbahn "parken". Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
+Der Grund wieso wir dieses eher anspruchsvolle Projekt gewählt haben, ist zum Einem, weil wir von Herr Kambor dazu motiviert wurden zum Anderen weil uns die Mondlandung fasziniert und weil wir uns gefragt haben, welche physikalischen Gesetze man bei einer vereinfachten Raumfahrtsimulation zum Mond beachten muss.
 
 
 ## 2 Unser Weg
 
-Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgeliestet, welche Teilaufgaben es zu bewältigen gilt, um die Simulation korrekt darzustellen. </br>
+Unser erster Schritt bei dem neuen Projekt war es, uns eine Übersicht über unsere Aufgabenstellung zu verschaffen. Dabei hat uns das Dokument *Simulation von Bewegung Anregung zur Arbeitstechnik* geholfen und wir haben im folgenden Punkt aufgelistet, welche Teilaufgaben es zu bewältigen gilt, um die Simulation korrekt darzustellen. </br>
 Es braucht:
 * Anfangswerte und Konstanten
 * Ein Runge-Kutta-Verfahren für das Lösen der Differenzialgleichung, damit man die Position und die folgende Position des Mondes und der Rakete annäherungsweise berechnen kann
@@ -16,7 +16,7 @@ Es braucht:
 * Kollisionserkennung
 * Eine passende Geschwindigkeit der Rakete, damit diese aus der Umlaufbahn um die Erde entweichen kann und dann anschliessend auf der Umlaufbahn um den Mond «geparkt» werden kann.
 * Eine passende Schubkraft, damit die Landefähre sanft auf der Oberfläche des Mondes landen kann
-* Ein in Tkinter eingebettetes Pygamefenster
+* Ein in *Tkinter* eingebettetes *Pygamefenster*
 
 ### 2.1 Anfangswerte und Konstanten
 Eine weitere Aufgabe war es die Anfangswerte und Konstanten in unserer Simulation zu recherchieren und zu berechnen wie zum Beispiel die Erd- oder die Mondmasse. Diese Werte sind von Nöten um die Differenzialgleichungen für das Zweikörperproblem aufzustellen und zu lösen.
@@ -37,7 +37,7 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 ### 2.5 Kollisionserkennung
 Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
 
-## 3 Jetziger Stand
+## 3 Aktueller Stand
 ![Screenshot](/Users/flavian112/Developer/Repository/apollo11/Journal/Screenshot1.png)
 
 Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie. Für die Berechnung der Positionen des Mondes hat es ein funktionierendes Runge-Kutta-Verfahren zweiter Ordnung. Die Rakete wird wie der Mond von der Gravitationskraft der Erde aber auch noch von der Gravitationskraft des Mondes beeinflusst. Für die Berechnung der Position kann die selbe Runge-Kutta-Funktion verwendet werden. Die Rakete ist auch flugfähig dank eines Vektors, der die Schubkraft darstellen soll. Das Landemodul kann von der Rakete losgelöst werden und wird genau wie die Rakete von den beiden Gravitationskräften beeinflusst. 
@@ -46,7 +46,7 @@ Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der
 Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft der Rakete, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten: </br>
 **Formel** </br>
 Die Schubkraft des Landemoduls für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein.
-Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit Tkinter einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
+Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit *Tkinter* einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
 
 
 
