@@ -45,6 +45,9 @@ Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete *Sat
 ## 4 Ausblick
 Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft von *Saturn V*, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Für diese Herausforderung haben wir uns schon einen möglichen Lösungansatz überlegt, der wie folgt aussieht: Mit der Hilfe eines *PID-Feedbackcontrollers* soll eine Zielposition/Zwischenposition und eine Geschwindikeit, die die Rakete im Ziel haben soll, für diese vorgegeben werden. Der Controller sorgt dafür, dass die Schubkraft laufend so berechnet wird, dass die Rakete, ohne das Ziel zu verfehlen, am vorgegebenen Ort ankommt.
 Die Schubkraft des Landemoduls *Eagle* für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Landung wird gleich wie bei dem Flug der Rakete sein. </br>
+</br>
+![PID-Controller](https://upload.wikimedia.org/wikipedia/commons/thumb/4/43/PID_en.svg/971px-PID_en.svg.png) </br>
+</br>
 Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit *Tkinter* einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
 
 
