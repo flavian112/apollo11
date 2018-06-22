@@ -2,7 +2,7 @@
 
 ## 1 Zielsetzung & Motivation
 
-Unser Ziel ist es mit *Tkinter* und *Pygame* ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt werden und in dessen Umlaufbahn "parken". Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
+Unser Ziel ist es mit *Tkinter* und *PyGame* ein Programm zu schreiben, dass eine Mondlandung simulieren kann. Bei dieser Simulation soll das Raumschiff zuerst zum Mond geschickt werden und in dessen Umlaufbahn "parken". Anschliessend soll eine Landefähre ausgeschickt werden, die mit der Hilfe eines Antriebes sanft auf dem Mond landet.  
 Der Grund wieso wir dieses eher anspruchsvolle Projekt gewählt haben, ist zum Einem, weil wir von Herr Kambor dazu motiviert wurden zum Anderen weil uns die Mondlandung fasziniert und weil wir uns gefragt haben, welche physikalischen Gesetze man bei einer vereinfachten Raumfahrtsimulation zum Mond beachten muss.
 
 
@@ -16,7 +16,7 @@ Es braucht:
 * Kollisionserkennung
 * Eine passende Geschwindigkeit der Rakete, damit diese aus der Umlaufbahn um die Erde entweichen kann und dann anschliessend auf der Umlaufbahn um den Mond «geparkt» werden kann.
 * Eine passende Schubkraft, damit die Landefähre sanft auf der Oberfläche des Mondes landen kann
-* Ein in *Tkinter* eingebettetes *Pygamefenster*
+* Ein in *Tkinter* eingebettetes *PyGame-Fenster*
 
 ### 2.1 Anfangswerte und Konstanten
 Eine weitere Aufgabe war es die Anfangswerte und Konstanten in unserer Simulation zu recherchieren und zu berechnen wie zum Beispiel die Erd- oder die Mondmasse. Diese Werte sind von Nöten um die Differenzialgleichungen für das Zweikörperproblem aufzustellen und zu lösen.
