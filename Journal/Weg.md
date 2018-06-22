@@ -22,10 +22,10 @@ Es braucht:
 Eine weitere Aufgabe war es die Anfangswerte und Konstanten in unserer Simulation zu recherchieren und zu berechnen wie zum Beispiel die Erd- oder die Mondmasse. Diese Werte sind von Nöten um die Differenzialgleichungen für das Zweikörperproblem aufzustellen und zu lösen.
 
 ### 2.2 Das Runge-Kutta-Verfahren
-Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordnung programmiert. Dabei gab es vor Allem am Anfang Schwierigkeiten, das zweistufige Verfahren, was bei unserer Simulation für die Fortbewegung von Mond und Rakete in Relation zu der Erde von Nöten ist, richtig zu verstehen. 
+Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordnung programmiert. Dabei gab es vor Allem am Anfang Schwierigkeiten, das zweistufige Verfahren, was bei unserer Simulation für die Fortbewegung von Mond und der Rakete *Saturn V* in Relation zu der Erde von Nöten ist, richtig zu verstehen. 
 
 ### 2.3 Das Zweikörperproblem
-Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf die Rakete auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand eines Vektors berechnet beziehungsweise sie fliegt in die Richtung des vorgegebenen Vektors.
+Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf *Saturn V* auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand eines Vektors berechnet beziehungsweise sie fliegt in die Richtung des vorgegebenen Vektors.
 $$
 r'' = -G\frac{mM}{r^2} \cdot \frac{1}{\mu} \cdot \frac{\vec{r}}{r}
 $$
@@ -40,12 +40,12 @@ Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann 
 ## 3 Aktueller Stand
 ![Screenshot](/Users/flavian112/Developer/Repository/apollo11/Journal/Screenshot1.png)
 
-Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie. Für die Berechnung der Positionen des Mondes hat es ein funktionierendes Runge-Kutta-Verfahren zweiter Ordnung. Die Rakete wird wie der Mond von der Gravitationskraft der Erde aber auch noch von der Gravitationskraft des Mondes beeinflusst. Für die Berechnung der Position kann die selbe Runge-Kutta-Funktion verwendet werden. Die Rakete ist auch flugfähig dank eines Vektors, der die Schubkraft darstellen soll. Das Landemodul kann von der Rakete losgelöst werden und wird genau wie die Rakete von den beiden Gravitationskräften beeinflusst. 
+Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete *Saturn V*. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie. Für die Berechnung der Positionen des Mondes hat es ein funktionierendes Runge-Kutta-Verfahren zweiter Ordnung. *Saturn V* wird wie der Mond von der Gravitationskraft der Erde aber auch noch von der Gravitationskraft des Mondes beeinflusst. Für die Berechnung der Position kann die selbe Runge-Kutta-Funktion verwendet werden. Die Rakete ist auch flugfähig dank eines Vektors, der die Schubkraft darstellen soll. Das Landemodul kann von der Rakete losgelöst werden und wird genau wie die Rakete von den beiden Gravitationskräften beeinflusst. 
 
 ## 4 Ausblick
-Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft der Rakete, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten: </br>
+Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft von *Saturn V*, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten: </br>
 **Formel** </br>
-Die Schubkraft des Landemoduls für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein. </br>
+Die Schubkraft des Landemoduls *Eagle* für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein. </br>
 Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit *Tkinter* einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
 
 
