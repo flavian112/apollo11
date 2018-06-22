@@ -140,9 +140,10 @@ moon = pyObj(screen, MOON_START_POS, size=MOON_RADIUS*2, img=moonImg, name='Moon
 moon.velocity = MOON_PERIGEE_VELOCITY
 
 saturnVImg = pygame.image.load(SATURNV_IMG_PATH)
-saturnV = pyObj(screen, EARTH_START_POS + np.array([0.0, EARTH_RADIUS]), size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0)) #EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2
+#saturnV = pyObj(screen, EARTH_START_POS + np.array([0.0, EARTH_RADIUS]), size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0)) #EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2
+saturnV = pyObj(screen, EARTH_START_POS + EARTH_RADIUS + MOON_START_POS/2, size=SATURNV_SIZE, img=saturnVImg, name='Saturn V', color=(255,0,0))
 saturnV.velocity = np.array([0.0, 0.0])#1.485e3])
-saturnV.fs = np.array([0.0, 3e7])
+#saturnV.fs = np.array([0.0, 3e7])
 
 
 eagleImg = pygame.image.load(EAGLE_IMG_PATH)
