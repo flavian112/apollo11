@@ -26,7 +26,10 @@ Als nächstes haben wir das Runge-Kutta-Verfahren zweiter Ordnung programmiert. 
 
 ### 2.3 Das Zweikörperproblem
 Mit den zuvor gesammelten Daten können wir die korrekte Bahn des Mondes um die Erde, die von den Gravitationskräften beeinflusst wird, berechnen. Bei unserer Berechnung gehen wir davon aus, dass sich die Erde im Mittelpunkt bei den Koordinaten (0/0) befindet. Die Gravitationskräfte (der Erde und des Mondes) die sich auf die Rakete auswirken kann man praktisch auf dieselbe Art berechnen. Für die Schubkraft, die einen Einfluss auf die Rakete hat, wird anhand eines Vektors berechnet beziehungsweise sie fliegt in die Richtung des vorgegebenen Vektors.
-**DGL**
+$$
+r'' = -G\frac{mM}{r^2} \cdot \frac{1}{\mu} \cdot \frac{\vec{r}}{r}
+$$
+
 
 ### 2.4 Skalierung 
 Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewollten Grösse, angezeigt wird, ist es notwendig das die Objekte Erde und Mond abhängig von der Grösse des Projektions-Rechtecks, auf dem sich unsere Animation abspielt, zu machen. 
@@ -35,6 +38,10 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
 
 ## 3 Jetziger Stand
+![Screenshot](/Users/flavian112/Developer/Repository/apollo11/Journal/Screenshot1.png)
+
+
+
 Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie.
 
 * Pygamesimulation
