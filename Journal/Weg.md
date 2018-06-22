@@ -38,14 +38,13 @@ Damit grafisch alles Korrekt, das heisst alles in der richtigen oder in der gewo
 Ein weiterer Aspekt ist es, Kollisionen zu erkennen bzw. heraus zu finden, wann die Rakete "auf der Erde ist" und sich nicht einfach "in die Erde" oder "durch den Mond" bewegt. Das Problem haben wir so gelöst, indem wir die Distanz zwischen einem Punkt der Rakete und dem Mittelpunkt des Mondes oder der Erde berechnet haben und dieser sollte immer grösser als der Radius des jeweiligen Himmelskörpers sein.
 
 ## 3 Aktueller Stand
-![Screenshot](/Users/flavian112/Developer/Repository/apollo11/Journal/Screenshot1.png)
+![Screenshot](./Screenshot1.png)
 
 Wir haben wie oben im Bild ersichtlich eine Erde einen Mond und eine Rakete *Saturn V*. Der Mond wird von der Gravitationskraft der Erde beeinflusst und er bewegt sich auf einer Bahn um sie. Für die Berechnung der Positionen des Mondes hat es ein funktionierendes Runge-Kutta-Verfahren zweiter Ordnung. *Saturn V* wird wie der Mond von der Gravitationskraft der Erde aber auch noch von der Gravitationskraft des Mondes beeinflusst. Für die Berechnung der Position kann die selbe Runge-Kutta-Funktion verwendet werden. Die Rakete ist auch flugfähig dank eines Vektors, der die Schubkraft darstellen soll. Das Landemodul kann von der Rakete losgelöst werden und wird genau wie die Rakete von den beiden Gravitationskräften beeinflusst. 
 
 ## 4 Ausblick
-Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft von *Saturn V*, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Dafür müssen folgende Bedingungen gelten: </br>
-**Formel** </br>
-Die Schubkraft des Landemoduls *Eagle* für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Schubkraft wird gleich wie bei der Rakete sein. </br>
+Was bei unserer Simulation noch fehlt ist die Berechnung für die Schubkraft von *Saturn V*, damit sie zuerst die Umlaufbahn um die Erde verlassen und anschliessen auf der Umlaufbahn des Mondes «parkiert» werden kann. Für diese Herausforderung haben wir uns schon einen möglichen Lösungansatz überlegt, der wie folgt aussieht: Mit der Hilfe eines *PID-Feedbackcontrollers* soll eine Zielposition/Zwischenposition und eine Geschwindikeit, die die Rakete im Ziel haben soll, für diese vorgegeben werden. Der Controller sorgt dafür, dass die Schubkraft laufend so berechnet wird, dass die Rakete, ohne das Ziel zu verfehlen, am vorgegebenen Ort ankommt.
+Die Schubkraft des Landemoduls *Eagle* für eine sanfte Landung muss auch noch berechnet werden. Aber das Prinzip der Landung wird gleich wie bei dem Flug der Rakete sein. </br>
 Elegant wäre es auch noch, wenn wir, wie wir es uns vorgenommen haben, eine Bedienungsoberfläche mit *Tkinter* einbringen können. Diese Bedienungsoberfläche soll zwei Knöpfe haben, mit denen man die Simulation starten als auch stoppen und zurück an den Anfang setzen kann. Weitere Funktionen, die die Simulation haben sollte, wäre zum Beispiel eine Zoomfunktion.
 
 
