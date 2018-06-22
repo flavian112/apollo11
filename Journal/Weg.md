@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 
 
@@ -10,6 +11,9 @@
 
 
 # Apollo11
+=======
+# Apollo11: Mondflug, Landung einer Sonde auf dem Mond
+>>>>>>> c39d071b3406a77b5fbe906cf3812012c0c32091
 
 ## Mondflug, Landung einer Sonde auf dem Mond
 
